@@ -74,6 +74,7 @@ Read removes only half the data in the same time.
 FIFO reaches near full, risk of overflow.
 
 Depth Calculation:
+
 Time to write burst: 120 × 10 ns = 1200 ns
 Data read in 1200 ns: 1200 / 20 ns = 60 items
 Data to be stored = 120 – 60 = 60 items
