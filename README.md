@@ -1,11 +1,12 @@
 # FIFO-analysis
 This project presents a parameterized Adaptive FIFO (First-In, First-Out) buffer designed in Verilog, along with a complete simulation testbench for functional and performance analysis.
-FIFO – First In First Out
+# FIFO – First In First Out
 A FIFO (First-In First-Out) buffer is a memory structure in which the first data written is the first data read. FIFO ensures data is processed in the same sequence in which it arrives. It is widely used in communication systems, data streaming, pipelining, DMA, video/audio processing, and clock-domain crossing.
 
 <img width="654" height="229" alt="image" src="https://github.com/user-attachments/assets/87244aea-01c5-446c-a8c7-1c7bdf39c94e" />
 
-Types of FIFO
+--
+## Types of FIFO
 
 ‣Synchronous FIFO:
 Uses a single clock for both read and write operations.
