@@ -5,43 +5,46 @@ A FIFO (First-In First-Out) buffer is a memory structure in which the first data
 
 <img width="654" height="229" alt="image" src="https://github.com/user-attachments/assets/87244aea-01c5-446c-a8c7-1c7bdf39c94e" />
 
---
+---
+
 ## Types of FIFO
 
-‣Synchronous FIFO:
+### ‣Synchronous FIFO:
 Uses a single clock for both read and write operations.
 Simpler design.
 Suitable when producer and consumer operate on the same clock domain.
 
-‣Asynchronous FIFO (Non-Synchronous FIFO):
+### ‣Asynchronous FIFO (Non-Synchronous FIFO):
 Uses separate clocks for read and write sides.
 Used when data crosses different clock domains.
 Needs additional logic (Gray counters, synchronizers) for safe transfer.
 
-FIFO Depth:
+---
+
+## FIFO Depth:
 FIFO depth represents how many data items the FIFO can store at a time.
 Depth is determined based on:
-i)Write and read frequency
-ii)Burst size
-iii)Gaps in data arrival
-iv)Idle cycles
-v)Duty cycles
+1. Write and read frequency
+2. Burst size
+3. Gaps in data arrival
+4. Idle cycles
+5. Duty cycles
 
 A well-sized FIFO ensures no overflow or underflow even under worst-case conditions.
 
-⚠️ Overflow
+### Overflow
 Overflow happens when:
 Write frequency > Read frequency
 Data arrives faster than it is removed.
 FIFO becomes Full → new incoming data is lost.
 
-⚠️ Underflow
+### Underflow
 Underflow happens when:
 Read frequency > Write frequency
 Consumer reads faster than data is produced.
 FIFO becomes Empty → invalid or stale data is read.
 
-🔄 Idle Cycle
+### Idle Cycle
 An idle cycle is a clock cycle in which no read or write operation happens.
 Idle cycles occur due to:
 
@@ -50,7 +53,7 @@ Gaps between two bursts
 Control logic wait states
 Idle cycles reduce the effective bandwidth.
 
-📉 Duty Cycle (Enable Duty)
+###Duty Cycle (Enable Duty)
 Duty cycle defines how long the write/read enable stays HIGH within one clock period.
 
 Example:
@@ -58,9 +61,11 @@ Write duty cycle = 50% → write enabled for half of the cycles
 Read duty cycle = 25% → read enabled for one-fourth of cycles
 Duty cycle affects the actual throughput, not just the frequency.
 
-🟦 Explanation of All 5 FIFO Cases (Based on Notes + Waveforms)
+---
 
-✅ Case-1
+# Explanation of All 5 FIFO Cases (Based on Notes + Waveforms)
+
+## Case-1
 
 Write frequency = 100 MHz
 Read frequency = 50 MHz
@@ -75,13 +80,14 @@ Read removes only half the data in the same time.
 FIFO reaches near full, risk of overflow.
 
 Depth Calculation:
+- Time to write burst: 120 × 10 ns = 1200 ns
+- Data read in 1200 ns: 1200 / 20 ns = 60 items
+- Data to be stored = 120 – 60 = 60 items
+- FIFO depth ≥ 60
 
-Time to write burst: 120 × 10 ns = 1200 ns
-Data read in 1200 ns: 1200 / 20 ns = 60 items
-Data to be stored = 120 – 60 = 60 items
-FIFO depth ≥ 60
+---
 
-✅ Case-2
+## Case-2
 Write = 200 MHz
 Read = 50 MHz
 Burst size = 120
@@ -97,14 +103,15 @@ FIFO fills, but slower than Case-1 because write is not continuous.
 Read has even more idle time → occupancy grows further.
 
 Depth Calculation:
+- Write time per data = 2 × (1/200 MHz) = 10 ns
+- Read time per data = 3 × (1/50 MHz) = 60 ns
+- Data read in 1200 ns = 1200/60 = 20 items
+- Data stored = 120 – 20 = 100 items
+- FIFO depth ≥ 100
 
-Write time per data = 2 × (1/200 MHz) = 10 ns
-Read time per data = 3 × (1/50 MHz) = 60 ns
-Data read in 1200 ns = 1200/60 = 20 items
-Data stored = 120 – 20 = 100 items
-FIFO depth ≥ 100
+---
 
-✅ Case-3
+## Case-3
 Write = 200 MHz, write enable = 50% duty
 Read = 50 MHz, read enable = 25% duty
 Burst size = 120
@@ -119,14 +126,15 @@ full asserts frequently
 Highest peak_usage among all cases.
 
 Depth Calculation:
+- Effective write time = 1/100 MHz = 10 ns
+- Effective read time = 1/(50 MHz × 0.25) = 80 ns
+- Data read in 1200 ns ≈ 15 items
+- Data stored = 120 – 15 = 105 items
+- FIFO depth ≥ 105
 
-Effective write time = 1/100 MHz = 10 ns
-Effective read time = 1/(50 MHz × 0.25) = 80 ns
-Data read in 1200 ns ≈ 15 items
-Data stored = 120 – 15 = 105 items
-FIFO depth ≥ 105
+---
 
-✅ Case-4
+## Case-4
 Write = 40 MHz
 Read = 80 MHz
 Burst = 120
@@ -139,14 +147,15 @@ FIFO quickly empties → underflow risk.
 empty and almost_empty stay HIGH most of the time.
 
 Depth Calculation:
+- In 3000 ns:
+- Read can consume 240 items
+- Write produces only 120
+- Since read > write, FIFO depth requirement → very small
+- FIFO not stressed in this case.
 
-In 3000 ns:
-Read can consume 240 items
-Write produces only 120
-Since read > write, FIFO depth requirement → very small
-FIFO not stressed in this case.
+---
 
-✅ Case-5
+## Case-5
 Write = 50 MHz
 Read = 50 MHz
 Burst Size = 120
@@ -154,10 +163,12 @@ Observation
 
 <img width="1291" height="714" alt="Screenshot 2025-07-16 205558" src="https://github.com/user-attachments/assets/330bcb69-be76-45b9-b3c6-66961987de30" />
 
-Write and read speeds are equal.
-FIFO reaches a stable equilibrium.
-full and empty rarely occur.
-Ideal balanced streaming case.
+- Write and read speeds are equal.
+- FIFO reaches a stable equilibrium.
+- full and empty rarely occur.
+- Ideal balanced streaming case.
 
-Conclusion:
+---
+
+### Conclusion:
 FIFO is not required, or a very small depth is sufficient.
