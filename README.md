@@ -60,6 +60,7 @@ Duty cycle affects the actual throughput, not just the frequency.
 🟦 Explanation of All 5 FIFO Cases (Based on Notes + Waveforms)
 
 ✅ Case-1
+
 Write frequency = 100 MHz
 Read frequency = 50 MHz
 Burst size = 120
@@ -71,7 +72,8 @@ Write is twice as fast as read.
 FIFO fills quickly → almost_full = 1
 Read removes only half the data in the same time.
 FIFO reaches near full, risk of overflow.
-Depth Calculation (Based on Notes)
+
+Depth Calculation:
 Time to write burst: 120 × 10 ns = 1200 ns
 Data read in 1200 ns: 1200 / 20 ns = 60 items
 Data to be stored = 120 – 60 = 60 items
@@ -91,7 +93,9 @@ Observation
 Even with idle cycles, write rate > read rate.
 FIFO fills, but slower than Case-1 because write is not continuous.
 Read has even more idle time → occupancy grows further.
-Depth Calculation
+
+Depth Calculation:
+
 Write time per data = 2 × (1/200 MHz) = 10 ns
 Read time per data = 3 × (1/50 MHz) = 60 ns
 Data read in 1200 ns = 1200/60 = 20 items
@@ -111,7 +115,9 @@ Read operates only 25% → effective rate = 12.5 MHz
 FIFO fills very fast
 full asserts frequently
 Highest peak_usage among all cases.
-Depth Calculation
+
+Depth Calculation:
+
 Effective write time = 1/100 MHz = 10 ns
 Effective read time = 1/(50 MHz × 0.25) = 80 ns
 Data read in 1200 ns ≈ 15 items
@@ -129,7 +135,9 @@ Observation
 Read is twice as fast as write.
 FIFO quickly empties → underflow risk.
 empty and almost_empty stay HIGH most of the time.
-Depth Calculation (Notes)
+
+Depth Calculation:
+
 In 3000 ns:
 Read can consume 240 items
 Write produces only 120
