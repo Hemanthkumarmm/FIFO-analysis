@@ -2,6 +2,7 @@
 This project presents a parameterized Adaptive FIFO (First-In, First-Out) buffer designed in Verilog, along with a complete simulation testbench for functional and performance analysis.
 FIFO – First In First Out
 A FIFO (First-In First-Out) buffer is a memory structure in which the first data written is the first data read. FIFO ensures data is processed in the same sequence in which it arrives. It is widely used in communication systems, data streaming, pipelining, DMA, video/audio processing, and clock-domain crossing.
+
 <img width="654" height="229" alt="image" src="https://github.com/user-attachments/assets/87244aea-01c5-446c-a8c7-1c7bdf39c94e" />
 
 Types of FIFO
@@ -63,6 +64,7 @@ Write frequency = 100 MHz
 Read frequency = 50 MHz
 Burst size = 120
 Observation
+
 <img width="1519" height="697" alt="Screenshot 2025-07-16 204654" src="https://github.com/user-attachments/assets/8b8b0a5c-e8dd-4ed6-8f20-6c52a605868a" />
 
 Write is twice as fast as read.
@@ -83,6 +85,7 @@ Idle cycles:
 1 idle cycle between writes
 2 idle cycles between reads
 Observation
+
 <img width="1515" height="699" alt="Screenshot 2025-07-16 205004" src="https://github.com/user-attachments/assets/a0483006-8d2a-4fea-97b0-0f41bdb19a96" />
 
 Even with idle cycles, write rate > read rate.
@@ -100,6 +103,7 @@ Write = 200 MHz, write enable = 50% duty
 Read = 50 MHz, read enable = 25% duty
 Burst size = 120
 Observation
+
 <img width="1288" height="717" alt="Screenshot 2025-07-16 205320" src="https://github.com/user-attachments/assets/8438248e-82eb-43b1-a6fd-accb82599850" />
 
 Write operates half the time → effective rate = 100 MHz
@@ -119,6 +123,7 @@ Write = 40 MHz
 Read = 80 MHz
 Burst = 120
 Observation
+
 <img width="1287" height="717" alt="Screenshot 2025-07-16 205451" src="https://github.com/user-attachments/assets/475f609b-f021-4961-9147-613d2f68a425" />
 
 Read is twice as fast as write.
@@ -136,6 +141,7 @@ Write = 50 MHz
 Read = 50 MHz
 Burst Size = 120
 Observation
+
 <img width="1291" height="714" alt="Screenshot 2025-07-16 205558" src="https://github.com/user-attachments/assets/330bcb69-be76-45b9-b3c6-66961987de30" />
 
 Write and read speeds are equal.
